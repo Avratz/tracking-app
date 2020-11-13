@@ -1,21 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
 
-export default function App() {
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import AccountScreen from './src/screens/AccountScreen'
+import SigninScreen from './src/screens/SigninScreen'
+import SignupScreen from './src/screens/SignupScreen'
+import TrackCreateScreen from './src/screens/TrackCreateScreen'
+import TrackDetailScreen from './src/screens/TrackDetailScreen'
+import TrackListScreen from './src/screens/TrackListScreen'
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function TrackListStack() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="TrackList" component={TrackListScreen} />
+      <Stack.Screen name="TrackDetails" component={TrackDetailScreen} />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+  return (
+    <NavigationContainer>
+      {
+        !isLoggedIn ? (
+        <Stack.Navigator>
+          <Stack.Screen name="SignIn" component={SigninScreen} />
+          <Stack.Screen name="SignUp" component={SignupScreen} />
+        </Stack.Navigator>
+      ):(
+        <Tab.Navigator>
+          <Tab.Screen name="TrackList" component={TrackListStack}/>
+          <Tab.Screen name="Account" component={AccountScreen} />
+          <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
+      </Tab.Navigator>
+       )}
+    </NavigationContainer>
+  )
+}
+
+export default App
+
+const styles = StyleSheet.create({})
