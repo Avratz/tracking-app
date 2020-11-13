@@ -1,14 +1,32 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Text, Input, Button} from 'react-native-elements'
+import Spacer from '../components/Spacer'
 
 const SigninScreen = () => {
   return (
     <View>
-      <Text>SigninScreen</Text>
+      <Spacer>
+        <Text h2>Sign in!</Text>
+      </Spacer>
+      <Spacer>
+        <Input label="Email"/>
+      </Spacer>
+      <Spacer>
+        <Input label="Password"/>
+      </Spacer>
+      <Spacer>
+        <Button title="SignIn!"/>
+      </Spacer>
+
     </View>
   )
 }
 
 export default SigninScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  input: {
+    marginTop: 35,
+  }
+})
