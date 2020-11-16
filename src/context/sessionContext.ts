@@ -5,11 +5,17 @@ import AsyncStorage from '@react-native-community/async-storage'
 const sessionReducer = (state: any, action: any) => {
 	switch (action.type) {
 		case 'SIGNIN':
-			return { error: '', token: action.payload }
+			return { ...state, error: '', token: action.payload }
 		case 'SIGNUP':
-			return { error: '', token: action.payload }
+			return { ...state, error: '', token: action.payload }
+		case 'SIGNOUT':
+			return { ...state, error: '', token: '' }
 		case 'ERROR':
 			return { ...state, error: action.payload }
+		case 'LOADING':
+			return { ...state, loading: true }
+		case 'NOT_LOADING':
+			return { ...state, loading: false }
 		default:
 			return state
 	}
@@ -45,8 +51,32 @@ const actions = {
 			}
 		}
 	},
+	signout(dispatch: React.Dispatch<any>) {
+		return async () => {
+			try {
+				await AsyncStorage.removeItem('token')
+				dispatch({ type: 'SIGNOUT' })
+			} catch (err) {
+				console.log(err)
+			}
+		}
+	},
 	clearError(dispatch: React.Dispatch<any>) {
 		return () => dispatch({ type: 'ERROR', payload: '' })
+	},
+	autoLogin(dispatch: React.Dispatch<any>) {
+		return async () => {
+			try {
+				dispatch({ type: 'LOADING' })
+				const token = await AsyncStorage.getItem('token')
+				if (token) {
+					dispatch({ type: 'SIGNIN', payload: token })
+				}
+				dispatch({ type: 'NOT_LOADING' })
+			} catch (err) {
+				console.log(err)
+			}
+		}
 	},
 }
 

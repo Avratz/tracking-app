@@ -12,6 +12,7 @@ const SignupScreen = () => {
 	React.useLayoutEffect(() => {
 		actions.clearError()
 	}, [isFocused])
+
 	return (
 		<View style={styles.container}>
 			<AuthForm

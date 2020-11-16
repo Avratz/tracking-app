@@ -14,6 +14,7 @@ import TrackDetailScreen from './src/screens/TrackDetailScreen'
 import TrackListScreen from './src/screens/TrackListScreen'
 
 import useSession from './src/hooks/useSession'
+import LoadingBlankScreen from './src/screens/LoadingBlankScreen'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -27,32 +28,54 @@ function TrackListStack() {
 	)
 }
 
+function AccountStack() {
+	return (
+		<Stack.Navigator>
+			<Stack.Screen name='Account' component={AccountScreen} />
+		</Stack.Navigator>
+	)
+}
+
+function TrackCreateStack() {
+	return (
+		<Stack.Navigator>
+			<Stack.Screen name='TrackCreate' component={TrackCreateScreen} />
+		</Stack.Navigator>
+	)
+}
+
 const Main = () => {
 	const { state } = useSession()
 	return (
 		<NavigationContainer>
 			{!state.token ? (
 				<Stack.Navigator>
-					<Stack.Screen
-						name='SignUp'
-						component={SignupScreen}
-						options={{
-							headerShown: false,
-						}}
-					/>
-					<Stack.Screen
-						name='SignIn'
-						component={SigninScreen}
-						options={{
-							headerShown: false,
-						}}
-					/>
+					{state.loading ? (
+						<Stack.Screen name='LoadingBlank' component={LoadingBlankScreen} />
+					) : (
+						<React.Fragment>
+							<Stack.Screen
+								name='SignIn'
+								component={SigninScreen}
+								options={{
+									headerShown: false,
+								}}
+							/>
+							<Stack.Screen
+								name='SignUp'
+								component={SignupScreen}
+								options={{
+									headerShown: false,
+								}}
+							/>
+						</React.Fragment>
+					)}
 				</Stack.Navigator>
 			) : (
 				<Tab.Navigator>
 					<Tab.Screen name='TrackList' component={TrackListStack} />
-					<Tab.Screen name='Account' component={AccountScreen} />
-					<Tab.Screen name='TrackCreate' component={TrackCreateScreen} />
+					<Tab.Screen name='TrackCreate' component={TrackCreateStack} />
+					<Tab.Screen name='Account' component={AccountStack} />
 				</Tab.Navigator>
 			)}
 		</NavigationContainer>
