@@ -1,12 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import Map from '../components/Map'
 
 const TrackCreateScreen = () => {
-  return (
-    <View>
-      <Text>TrackCreateScreen</Text>
-    </View>
-  )
+	return (
+		<View>
+			<Map />
+		</View>
+	)
 }
 
 export default TrackCreateScreen

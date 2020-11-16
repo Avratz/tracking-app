@@ -67,7 +67,6 @@ const actions = {
 	autoLogin(dispatch: React.Dispatch<any>) {
 		return async () => {
 			try {
-				dispatch({ type: 'LOADING' })
 				const token = await AsyncStorage.getItem('token')
 				if (token) {
 					dispatch({ type: 'SIGNIN', payload: token })
@@ -83,5 +82,5 @@ const actions = {
 export const { Provider, Context } = createDataContext(
 	sessionReducer,
 	actions,
-	{ token: null }
+	{ token: null, loading: true }
 )
