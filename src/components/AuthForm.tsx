@@ -3,7 +3,12 @@ import { StyleSheet, View } from 'react-native'
 import { Input, Text, Button } from 'react-native-elements'
 import Spacer from './Spacer'
 
-const AuthForm = ({ headerTitle, submitButtonText, error, handleClick }) => {
+const AuthForm: React.FC<{
+	headerTitle: string
+	submitButtonText: string
+	error: string
+	handleClick: (email: string, password: string) => void
+}> = ({ headerTitle, submitButtonText, error, handleClick }) => {
 	const [email, setEmail] = React.useState('')
 	const [password, setPassword] = React.useState('')
 	return (
