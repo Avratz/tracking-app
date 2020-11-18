@@ -1,40 +1,18 @@
+import '../_mockLocation'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import Map from '../components/Map'
-import {
-	requestPermissionsAsync,
-	watchPositionAsync,
-	Accuracy,
-} from 'expo-location'
+import { useIsFocused } from '@react-navigation/native'
 
-import '../_mockLocation'
 import useLocation from '../hooks/useLocation'
+import useLocationContext from '../hooks/useLocationContext'
 
 const TrackCreateScreen = () => {
-	const [err, setErr] = React.useState('')
-	const { state, actions } = useLocation()
-	const startWatching = async () => {
-		try {
-			await requestPermissionsAsync()
-			await watchPositionAsync(
-				{
-					accuracy: Accuracy.BestForNavigation,
-					timeInterval: 1000,
-					distanceInterval: 10,
-				},
-				(location) => {
-					actions.addLocation(location)
-				}
-			)
-		} catch (err) {
-			setErr(err)
-			console.log(err)
-		}
-	}
-
-	React.useEffect(() => {
-		startWatching()
-	}, [])
+	const isFocused = useIsFocused()
+	const { actions } = useLocationContext()
+	const [err] = useLocation(isFocused, (location: any) =>
+		actions.addLocation(location)
+	)
 
 	return (
 		<View>

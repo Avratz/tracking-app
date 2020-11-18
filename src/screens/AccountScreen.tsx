@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements'
 import useSession from '../hooks/useSession'
 
 const AccountScreen = () => {
-	const { state, actions } = useSession()
+	const { actions } = useSession()
 	return (
 		<View>
 			<Text>AccountScreen</Text>
