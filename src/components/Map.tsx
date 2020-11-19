@@ -33,5 +33,6 @@ export default Map
 const styles = StyleSheet.create({
 	map: {
 		height: 300,
+		marginBottom: 15,
 	},
 })

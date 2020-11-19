@@ -8,35 +8,39 @@ import {
 
 export default function useLocation(shouldTrack: boolean, callback: any) {
 	const [err, setErr] = React.useState('')
-	const [subscriber, setSubscriber] = React.useState(null)
-	const startWatching = async () => {
-		try {
-			await requestPermissionsAsync()
-			const sub = await watchPositionAsync(
-				{
-					accuracy: Accuracy.BestForNavigation,
-					timeInterval: 1000,
-					distanceInterval: 10,
-				},
-				(location) => {
-					callback(location)
-				}
-			)
-			setSubscriber(sub)
-		} catch (err) {
-			setErr(err)
-			console.log(err)
-		}
-	}
-
 	React.useEffect(() => {
-		console.log(shouldTrack)
+		let subscriber
+		const startWatching = async () => {
+			try {
+				await requestPermissionsAsync()
+				subscriber = await watchPositionAsync(
+					{
+						accuracy: Accuracy.BestForNavigation,
+						timeInterval: 1000,
+						distanceInterval: 10,
+					},
+					callback
+				)
+			} catch (err) {
+				setErr(err)
+				console.log(err)
+			}
+		}
+
 		if (shouldTrack) {
 			startWatching()
 		} else {
-			subscriber.remove()
-			setSubscriber(null)
+			if (subscriber) {
+				subscriber.remove()
+			}
+
+			subscriber = null
 		}
-	}, [shouldTrack])
+		return () => {
+			if (subscriber) {
+				subscriber.remove()
+			}
+		}
+	}, [shouldTrack, callback])
 	return [err]
 }
