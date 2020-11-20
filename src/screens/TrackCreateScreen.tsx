@@ -10,12 +10,15 @@ import TrackForm from '../components/TrackForm'
 
 const TrackCreateScreen = () => {
 	const isFocused = useIsFocused()
-	const { state, actions } = useLocationContext()
+	const {
+		state: { recording },
+		actions,
+	} = useLocationContext()
 	const callback = React.useCallback(
-		(location: any) => actions.addLocation(location, state.recording),
-		[state.recording]
+		(location: any) => actions.addLocation(location, recording),
+		[recording]
 	)
-	const [err] = useLocation(isFocused, callback)
+	const [err] = useLocation(isFocused || recording, callback)
 
 	return (
 		<View>

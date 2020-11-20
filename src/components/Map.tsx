@@ -1,11 +1,11 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import MapView, { Circle } from 'react-native-maps'
+import MapView, { Polyline, Circle } from 'react-native-maps'
 
 import useLocationContext from '../hooks/useLocationContext'
 const Map = () => {
 	const {
-		state: { currentLocation },
+		state: { currentLocation, locations },
 	} = useLocationContext()
 
 	if (!currentLocation) return null
@@ -24,6 +24,7 @@ const Map = () => {
 				strokeColor='rgba(158,158,255,1)'
 				fillColor='rgba(158,158,255,0.3)'
 			/>
+			<Polyline coordinates={locations.map((loc) => loc.coords)} />
 		</MapView>
 	)
 }

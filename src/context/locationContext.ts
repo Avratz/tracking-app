@@ -1,5 +1,11 @@
 import createDataContext from './createDataContext'
 
+const initialState = {
+	recording: false,
+	locations: [],
+	currentLocation: null,
+	name: '',
+}
 const locationReducer = (state: any, action: any) => {
 	switch (action.type) {
 		case 'START':
@@ -12,6 +18,8 @@ const locationReducer = (state: any, action: any) => {
 			return { ...state, locations: [...state.locations, action.payload] }
 		case 'CHANGE_NAME':
 			return { ...state, name: action.payload }
+		case 'RESET':
+			return { ...state, name: '', locations: [] }
 		default:
 			return state
 	}
@@ -38,10 +46,13 @@ const actions = {
 			}
 		}
 	},
+	reset(dispatch: React.Dispatch<any>) {
+		return () => dispatch({ type: 'RESET' })
+	},
 }
 
 export const { Provider, Context } = createDataContext(
 	locationReducer,
 	actions,
-	{ recording: false, locations: [], currentLocation: null, name: '' }
+	initialState
 )
