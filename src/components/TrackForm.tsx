@@ -4,6 +4,7 @@ import { Button, Input } from 'react-native-elements'
 import useLocationContext from '../hooks/useLocationContext'
 import Spacer from './Spacer'
 import useSaveTrack from '../hooks/useSaveTrack'
+import { ScrollView } from 'react-native-gesture-handler'
 const TrackForm = () => {
 	const {
 		state: { name, recording, locations },
@@ -11,7 +12,7 @@ const TrackForm = () => {
 	} = useLocationContext()
 	const [saveTrack] = useSaveTrack()
 	return (
-		<React.Fragment>
+		<ScrollView>
 			<Spacer>
 				<Input
 					value={name}
@@ -30,7 +31,7 @@ const TrackForm = () => {
 					<Button title='Save' onPress={saveTrack} />
 				) : null}
 			</Spacer>
-		</React.Fragment>
+		</ScrollView>
 	)
 }
 

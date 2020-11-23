@@ -1,8 +1,12 @@
 import { NavigationContext, useIsFocused } from '@react-navigation/native'
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
+import {
+	FlatList,
+	ScrollView,
+	TouchableOpacity,
+} from 'react-native-gesture-handler'
 import useTrack from '../hooks/useTrack'
 
 const TrackListScreen = () => {
@@ -18,28 +22,30 @@ const TrackListScreen = () => {
 
 	console.log(state)
 	return (
-		<React.Fragment>
-			<FlatList
-				data={state}
-				keyExtractor={(item) => item._id}
-				renderItem={({ item }) => {
-					return (
-						<TouchableOpacity
-							onPress={() =>
-								navigation?.navigate('TrackDetails', { _id: item._id })
-							}
-						>
-							<ListItem bottomDivider>
-								<ListItem.Content>
-									<ListItem.Title>{item.name}</ListItem.Title>
-								</ListItem.Content>
-								<ListItem.Chevron />
-							</ListItem>
-						</TouchableOpacity>
-					)
-				}}
-			/>
-		</React.Fragment>
+		<View style={{ flex: 1 }}>
+			<ScrollView>
+				<FlatList
+					data={state}
+					keyExtractor={(item) => item._id}
+					renderItem={({ item }) => {
+						return (
+							<TouchableOpacity
+								onPress={() =>
+									navigation?.navigate('TrackDetails', { _id: item._id })
+								}
+							>
+								<ListItem bottomDivider>
+									<ListItem.Content>
+										<ListItem.Title>{item.name}</ListItem.Title>
+									</ListItem.Content>
+									<ListItem.Chevron />
+								</ListItem>
+							</TouchableOpacity>
+						)
+					}}
+				/>
+			</ScrollView>
+		</View>
 	)
 }
 

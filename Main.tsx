@@ -15,6 +15,7 @@ import TrackListScreen from './src/screens/TrackListScreen'
 
 import useSession from './src/hooks/useSession'
 import LoadingBlankScreen from './src/screens/LoadingBlankScreen'
+import { AntDesign, FontAwesome, Entypo } from '@expo/vector-icons'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -22,8 +23,16 @@ const Tab = createBottomTabNavigator()
 function TrackListStack() {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name='TrackList' component={TrackListScreen} />
-			<Stack.Screen name='TrackDetails' component={TrackDetailScreen} />
+			<Stack.Screen
+				name='TrackList'
+				component={TrackListScreen}
+				options={{ title: 'Tracks' }}
+			/>
+			<Stack.Screen
+				name='TrackDetails'
+				component={TrackDetailScreen}
+				options={{ title: 'Your Track' }}
+			/>
 		</Stack.Navigator>
 	)
 }
@@ -31,7 +40,11 @@ function TrackListStack() {
 function AccountStack() {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name='Account' component={AccountScreen} />
+			<Stack.Screen
+				name='Account'
+				component={AccountScreen}
+				options={{ title: 'Account' }}
+			/>
 		</Stack.Navigator>
 	)
 }
@@ -39,7 +52,11 @@ function AccountStack() {
 function TrackCreateStack() {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name='TrackCreate' component={TrackCreateScreen} />
+			<Stack.Screen
+				name='TrackCreate'
+				component={TrackCreateScreen}
+				options={{ title: 'Add Track' }}
+			/>
 		</Stack.Navigator>
 	)
 }
@@ -73,9 +90,36 @@ const Main = () => {
 				</Stack.Navigator>
 			) : (
 				<Tab.Navigator>
-					<Tab.Screen name='TrackList' component={TrackListStack} />
-					<Tab.Screen name='TrackCreate' component={TrackCreateStack} />
-					<Tab.Screen name='Account' component={AccountStack} />
+					<Tab.Screen
+						name='TrackList'
+						component={TrackListStack}
+						options={{
+							title: 'Tracks',
+							tabBarIcon: ({ focused, color, size }) => {
+								return <Entypo name='list' size={20} color={color} />
+							},
+						}}
+					/>
+					<Tab.Screen
+						name='TrackCreate'
+						component={TrackCreateStack}
+						options={{
+							title: 'Add Track',
+							tabBarIcon: ({ focused, color, size }) => {
+								return <AntDesign name='pluscircle' size={18} color={color} />
+							},
+						}}
+					/>
+					<Tab.Screen
+						name='Account'
+						component={AccountStack}
+						options={{
+							title: 'Account',
+							tabBarIcon: ({ focused, color, size }) => {
+								return <FontAwesome name='gear' size={20} color={color} />
+							},
+						}}
+					/>
 				</Tab.Navigator>
 			)}
 		</NavigationContainer>

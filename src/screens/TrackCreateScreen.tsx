@@ -1,4 +1,4 @@
-import '../_mockLocation'
+//import '../_mockLocation'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import Map from '../components/Map'
@@ -21,7 +21,7 @@ const TrackCreateScreen = () => {
 	const [err] = useLocation(isFocused || recording, callback)
 
 	return (
-		<View>
+		<View style={styles.container}>
 			<Map />
 			{err ? 'Please enable location services.' : null}
 			<TrackForm />
@@ -31,4 +31,8 @@ const TrackCreateScreen = () => {
 
 export default TrackCreateScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+})
